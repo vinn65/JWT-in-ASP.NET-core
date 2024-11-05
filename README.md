@@ -14,7 +14,7 @@ This project is an ASP.NET Core Web API for managing employee and customer data 
   - `POST api/account/login`: Authenticates a user and returns a JWT token.
   - `POST api/account/add-role`: Adds a new role (Admin only).
   - `POST api/account/assign-role`: Assigns a role to a user (Admin only).
-- **EmployeeController**: Data from BC.
+- **EmployeeController**: 
   - `GET api/employee`: Retrieves all employees (Admin only).
   - `GET api/employee/{id}`: Retrieves an employee by ID (Admin only).
   - `POST api/employee`: Adds a new employee.
