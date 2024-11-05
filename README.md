@@ -25,6 +25,16 @@ This project is an ASP.NET Core Web API for managing employee and customer data 
   - `GET api/customer`: Retrieves all customers (Admin and User).
   - `GET api/customer/{id}`: Retrieves a customer by ID (Admin and User).
   - `POST api/customer`: Creates a new customer (Admin only).
+ 
+ - **KcbController**:
+  - `GET api/kcb/token`: Fetches an authentication token from the KCB service.
+    - **Parameters**:
+      - `username` (query): The username for KCB service authentication.
+      - `password` (query): The password for KCB service authentication.
+    - **Returns**: JSON response containing:
+      - `access_token`: The token used for further authentication.
+      - `token_type`: Type of the token (e.g., Bearer).
+      - `expires_in`: Expiration time in seconds for the token.
 
 ## Authentication
 JWT is used for authentication, ensuring that users are authorized to access specific endpoints based on their assigned roles. The configuration for JWT is done in the `Startup` class, where token validation parameters are defined.
