@@ -39,5 +39,4 @@ JWT is used for authentication, ensuring that users are authorized to access spe
 - Ensure that the JWT tokens are correctly implemented in your authentication flow for secure access.
 - Ensure you Modify all BC URLs in `CustomerController`
 - In Swagger UI, After the token is generated (in /login endpoint), remember to add `Bearer` before to token in Authorize Action.
-- Assign roles before Testing
-
+- Assign roles before Testing(Remove the Admin authorization from `POST api/account/assign-role`, `POST api/account/add-role`)
