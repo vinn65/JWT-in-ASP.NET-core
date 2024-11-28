@@ -1,12 +1,15 @@
 using EmployeeAdminPortal.Models;
 using Microsoft.EntityFrameworkCore;
 using EmployeeAdminPortal.Services;
+using EmployeeAdminPortal.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using EmployeeAdminPortal.Data;
 using Microsoft.OpenApi.Models;
+using EmployeeAdminPortal.Controllers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,13 +22,68 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-builder.Services.AddHttpClient<CustomerService>()
+builder.Services.AddScoped<ISeminar, SeminarService>();
+builder.Services.AddSingleton<Credentials>();
+builder.Services.AddControllers();
+
+
+builder.Services.AddHttpClient<SeminarService>()
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
     {
         UseDefaultCredentials = true
 
     });
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowReactApp", policy =>
+//    {
+//        policy.WithOrigins("http://localhost:3000")
+//              .AllowAnyHeader()
+//              .AllowAnyMethod();
+//    });
+//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
+builder.Services.AddHttpClient<SeminarRegLineService>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        UseDefaultCredentials = true
+
+    });
+builder.Services.AddHttpClient<CustomerService>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        UseDefaultCredentials = true
+
+    });
+builder.Services.AddHttpClient<ResourceService>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        UseDefaultCredentials = true
+
+    });
+builder.Services.AddHttpClient<ContactService>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        UseDefaultCredentials = true
+
+    });
+builder.Services.AddHttpClient<SeminarRegService>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        UseDefaultCredentials = true
+
+    });
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -75,12 +133,13 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddSwaggerGen(swagger =>
 {
+    var title = "Vincent Seminar management Ltd.";
     //This is to generate the Default UI of Swagger Documentation    
-    swagger.SwaggerDoc("v1", new OpenApiInfo
+    swagger.SwaggerDoc("v1", new OpenApiInfo()
     {
         Version = "v1",
-        Title = "ASP.NET Core Web API E-Commerce",
-        Description = " ITI Project"
+        Title = "VSML",
+        Description = "Vincent Seminar Ltd."
     });
     // To Enable authorization using Swagger (JWT)    
     swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -120,6 +179,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
+
 
 app.UseAuthentication();
 

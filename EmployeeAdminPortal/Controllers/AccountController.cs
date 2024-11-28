@@ -35,7 +35,7 @@ namespace EmployeeAdminPortal.Controllers
 
             if (result.Succeeded)
             {
-                //await _userManager.AddToRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, "user");
                 return Ok(new { message = "User registered successfully" });
             }
 

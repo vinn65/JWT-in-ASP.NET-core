@@ -23,6 +23,7 @@ public class EmployeeController : ControllerBase
     {
 
         var allEmployees = dBContext.Employee.ToList();
+        
         return Ok(allEmployees);
     }
 
